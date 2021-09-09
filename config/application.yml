@@ -1,0 +1,11 @@
+server:
+  port: 8088
+datasource:
+  driverName: mysql
+  host: 127.0.0.1
+  port: 3306
+  database: shop_sys
+  username: root
+  password: 92910cjb
+  charset: utf8mb4
+  loc: Asia/Shanghai
