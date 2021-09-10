@@ -12,7 +12,8 @@ func main() {
 	common.InitDB()
 	r := gin.Default()
 	CollectRoute(r)
-	err := r.Run(":8088")
+	//err := r.Run(":8088")
+	err := r.RunTLS(":8088", "server.cer", "server.key")
 	if err != nil {
 		return
 	}

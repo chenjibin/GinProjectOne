@@ -1,5 +1,6 @@
 .DS_Store
-
+server.cer
+server.key
 # Editor directories and files
 .idea
 .vscode
