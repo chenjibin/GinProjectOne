@@ -4,6 +4,7 @@ import (
 	"GinProjectOne/common"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
+	"net/http"
 	"os"
 )
 
@@ -11,6 +12,7 @@ func main() {
 	initConfig()
 	common.InitDB()
 	r := gin.Default()
+	r.StaticFS("/static", http.Dir("./static"))
 	CollectRoute(r)
 	//err := r.Run(":8088")
 	err := r.RunTLS(":8088", "server.cer", "server.key")

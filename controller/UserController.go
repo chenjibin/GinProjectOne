@@ -5,20 +5,26 @@ import (
 	"GinProjectOne/model"
 	"GinProjectOne/response"
 	"github.com/gin-gonic/gin"
-	uuid "github.com/satori/go.uuid"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
-	"log"
 	"net/http"
 )
 
 func GetUserInfo(ctx *gin.Context) {
-	u2 := uuid.NewV4()
-	log.Printf("generated Version 4 UUID %v", u2)
 	response.Success(ctx, gin.H{
-		"name": "小孩",
-		"phone": "15061997812",
+		"name":    "小孩",
+		"phone":   "15061997812",
 		"address": "顺安新城",
+	}, "用户信息获取成功!")
+}
+
+func GetUserList(ctx *gin.Context) {
+	DB := common.GetDB()
+	var userList []model.UserList
+	DB.Table("users").Select([]string{"name", "id", "phone"}).Scan(&userList)
+	//DB.Table("users").Select("name", "id", "phone").Scan(&userList)
+	response.Success(ctx, gin.H{
+		"list": userList,
 	}, "用户信息获取成功!")
 }
 
@@ -45,12 +51,12 @@ func Register(ctx *gin.Context) {
 		return
 	}
 	newUser := model.User{
-		Name: name,
-		Phone: phone,
-		Password:  string(bcryptPassword),
+		Name:     name,
+		Phone:    phone,
+		Password: string(bcryptPassword),
 	}
 	DB.Create(&newUser)
-	response.Success(ctx,  gin.H{"token": "123"}, "注册成功")
+	response.Success(ctx, gin.H{"token": "123"}, "注册成功")
 }
 
 func Login(ctx *gin.Context) {
@@ -69,11 +75,11 @@ func Login(ctx *gin.Context) {
 		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"code": 422, "msg": "用户不存在"})
 		return
 	}
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(requestUser.Password)) ; err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(requestUser.Password)); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"code": 400, "msg": "密码错误"})
 		return
 	}
-	response.Success(ctx,  gin.H{"token": "123"}, "登录成功!")
+	response.Success(ctx, gin.H{"token": "123"}, "登录成功!")
 }
 
 func isTelephoneExist(db *gorm.DB, telephone string) bool {
