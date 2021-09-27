@@ -11,7 +11,7 @@ import (
 
 var DB *gorm.DB
 
-func InitDB() *gorm.DB{
+func InitDB() *gorm.DB {
 	host := viper.GetString("datasource.host")
 	port := viper.GetString("datasource.port")
 	database := viper.GetString("datasource.database")
@@ -32,9 +32,9 @@ func InitDB() *gorm.DB{
 	if err != nil {
 		panic("failed to connect database, err: " + err.Error())
 	}
-	err = db.AutoMigrate(&model.User{})
+	err = db.AutoMigrate(&model.User{}, &model.Role{})
 	if err != nil {
-		panic("failed to AutoMigrate user: " + err.Error())
+		panic("failed to AutoMigrate: " + err.Error())
 	}
 	DB = db
 	return db

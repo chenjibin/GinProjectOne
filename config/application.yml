@@ -9,3 +9,5 @@ datasource:
   password: 92910cjb
   charset: utf8mb4
   loc: Asia/Shanghai
+logger:
+  logFileName: system.log

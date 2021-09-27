@@ -8,3 +8,4 @@ server.key
 *.ntvs*
 *.njsproj
 *.sln
+/system.log

@@ -2,6 +2,7 @@ package main
 
 import (
 	"GinProjectOne/common"
+	"GinProjectOne/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"net/http"
@@ -12,6 +13,7 @@ func main() {
 	initConfig()
 	common.InitDB()
 	r := gin.Default()
+	r.Use(middleware.LoggerToFile())
 	r.StaticFS("/static", http.Dir("./static"))
 	CollectRoute(r)
 	//err := r.Run(":8088")

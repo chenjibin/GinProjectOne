@@ -21,8 +21,3 @@ type UserList struct {
 	Name  string `json:"name"`
 	Phone string `json:"phone"`
 }
-
-//func (u *User) BeforeCreate(tx *gorm.DB)  {
-//	u1 := uuid.NewV4()
-//	u.ID = u1
-//}
